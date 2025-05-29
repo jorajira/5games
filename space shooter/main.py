@@ -19,6 +19,8 @@ x = 100
 path = join('images', 'player.png')
 print(path)
 player_surf = pygame.image.load(join('space shooter', 'images', 'player.png')).convert_alpha()
+player_rect = player_surf.get_frect(center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+
 star_surf = pygame.image.load(join('space shooter', 'images', 'star.png')).convert_alpha()
 star_positions = [(randint(0, WINDOW_WIDTH), randint(0, WINDOW_HEIGHT)) for i in range(20)]
 
@@ -37,8 +39,10 @@ while running:
     #generate 20 stars on the screen at a time
     for pos in star_positions:
         display_surface.blit(star_surf, pos)
-    x += 0.1
-    display_surface.blit(player_surf, (x,150))
+    
+    if player_rect.right < WINDOW_WIDTH:
+        player_rect.left += 0.2
+    display_surface.blit(player_surf, player_rect)
     #this puts the game on the screen
     pygame.display.flip() #update and flip do the same thing.
     
